@@ -1,8 +1,8 @@
-package algorithm;
+package algorithm.week01;
 
 public class SumOfPartialSequence {
     public int[] solution(int[] sequence, int k) {
-        int [] answer = {0, 1000000};
+        int [] answer = {0, 1_000_000};
         int start = 0;
         int sum = 0;
 

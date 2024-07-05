@@ -8,7 +8,7 @@ import java.util.Queue;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
-public class BFS {
+public class DfsAndBfs {
     static boolean[] visited;
     static int[][] graph;
     static int N, M, start;

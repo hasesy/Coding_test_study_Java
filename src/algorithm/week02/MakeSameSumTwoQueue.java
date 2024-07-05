@@ -1,55 +1,43 @@
 package algorithm.week02;
 
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class MakeSameSumTwoQueue {
     public int solution(int[] queue1, int[] queue2) {
-        long average = average(queue1, queue2);
+        Queue<Long> q1 = new ArrayDeque<>();
+        Queue<Long> q2 = new ArrayDeque<>();
 
-        Queue<Long> q1 = new LinkedList<>();
-        Queue<Long> q2 = new LinkedList<>();
+        long q1Sum = 0;
+        long q2Sum = 0;
+        int end = queue1.length * 3;
+        int count = 0;
 
         for (int i = 0; i < queue1.length; i++) {
             q1.offer((long) queue1[i]);
+            q1Sum += queue1[i];
             q2.offer((long) queue2[i]);
+            q2Sum += queue2[i];
         }
 
-        int count = 0;
-        while (true) {
-            long sum = 0;
-            for (int i = 0; i < q1.size(); i++) {
-                sum += q1.peek();
-            }
-
-            if (sum > average) {
+        while (count < end) {
+            if (q1Sum == q2Sum) {
+                return count;
+            } else if (q1Sum > q2Sum) {
                 long pop = q1.poll();
                 q2.offer(pop);
-                count++;
-            } else if (sum < average) {
-                long pop = q2.poll();
-                q1.offer(pop);
+                q1Sum -= pop;
+                q2Sum += pop;
                 count++;
             } else {
-                long sum2 = 0;
-                for (int i = 0; i < q2.size(); i++) {
-                    sum2 += q2.peek();
-                }
-                if (sum2 == average) break;
+                long pop = q2.poll();
+                q1.offer(pop);
+                q2Sum -= pop;
+                q1Sum += pop;
+                count++;
             }
         }
 
-        return count;
-    }
-
-    private long average(int[] queue1, int[] queue2) {
-        long total = 0;
-
-        for (int i = 0; i < queue1.length; i++) {
-            total += queue1[i];
-            total += queue2[i];
-        }
-
-        return total / 2;
+        return -1;
     }
 }

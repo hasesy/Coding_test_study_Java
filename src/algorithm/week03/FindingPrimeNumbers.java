@@ -1,39 +1,43 @@
 package algorithm.week03;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
 
 public class FindingPrimeNumbers {
-    static int answer = 0;
+    HashSet<Integer> list = new HashSet<>();
     static boolean[] isPrime;
+    static int answer;
 
     public int solution(String numbers) {
-        int max = 10000000;
+        int max = 10_000_000;
         isPrime = isPrime(max);
         boolean[] visited = new boolean[numbers.length()];
-        int[] pieces = new int[numbers.length()];
 
-        for (int i = 0; i < numbers.length(); i++) {
-            pieces[i] = Integer.parseInt(numbers.substring(i, i + 1));
+        permutation(0, numbers, visited, 0);
+
+        for (int i : list) {
+            if (isPrime[i]) answer++;
         }
 
         return answer;
     }
 
 
-    private void recursion(int n, int[] pieces, boolean[] visited) {
-        StringBuilder sb = new StringBuilder();
+    private void permutation(int current, String numbers, boolean[] visited, int digit) {
+        if (digit == numbers.length()) return;
 
-        if (sb.length() == n) {
-            boolean result = isPrime[Integer.parseInt(sb.toString())];
-        }
-        for (int i = 0; i < pieces.length; i++) {
-            if (n == 1) {
-                boolean result = isPrime[pieces[i]];
-                if (result) answer++;
-            } else {
+        for (int i = 0; i < numbers.length(); i++) {
+            if (!visited[i]) {
+                visited[i] = true;
+                int newNumber = current + (int)((numbers.charAt(i) - '0') * Math.pow(10, digit));
+                list.add(newNumber);
+
+                permutation(newNumber, numbers, visited, digit + 1);
+
+                visited[i] = false;
             }
         }
+
     }
 
     private boolean[] isPrime(int max) {
@@ -42,11 +46,9 @@ public class FindingPrimeNumbers {
         isPrime[0] = isPrime[1] = false;
 
         for (int i = 2; i * i < max; i++) {
-            if (isPrime[i]) {
                 for (int j = i * i; j < max; j += i) {
                     isPrime[j] = false;
                 }
-            }
         }
 
         return isPrime;

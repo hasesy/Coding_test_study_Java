@@ -70,7 +70,7 @@ public class Virus {
 
     }
 
-    public static void dfs(int start) { //매개변수에 boolean graph 전달필요
+    public static void dfs(int start, boolean graph) { //매개변수에 boolean graph 전달필요
         // <2. 재귀로 구현하기>
         //1. start를 방문하지 않았을 경우에 작동한다
         //2. 개수를 세준다

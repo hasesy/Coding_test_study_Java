@@ -6,7 +6,6 @@ public class FatigueLevel {
 
     public int solution(int k, int[][] dungeons) {
         visited = new boolean[dungeons.length];
-        StringBuilder sb = new StringBuilder();
 
         dfs(0, k, dungeons);
 

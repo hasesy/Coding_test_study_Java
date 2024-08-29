@@ -16,8 +16,11 @@ public class CoinChange {
         // 0부터 amount까지 순회
         for (int i = 0; i < amount; i++) {
             if (dp[i] != LIMIT) {
+                // coins의 각 동전을 살펴본다.
                 for (int coin : coins) {
+                    // 현재 값과 선택한 동전의 합이 목표 금액(amount) 이하일 경우,
                     if (i + coin <= amount && dp[i + coin] > dp[i] + 1) {
+                        // 점화식에 따라 다음 금액(현재 값과 선택한 동전의 합)에 대한 조합 가능 최소 동전 개수를 저장
                         dp[i + coin] = dp[i] + 1;
                     }
                 }
